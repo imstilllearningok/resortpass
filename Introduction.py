@@ -67,7 +67,7 @@ def start_of_assessment():
             if st.session_state.bootcamp_data_uploaded:
                 
                 available_files = {
-                    "BootcampPass": "data\Analytics Engineering  Case Study Data External Version.xlsx",
+                    "BootcampPass": "Analytics Engineering  Case Study Data External Version.xlsx",
                     
                 }
 
