@@ -1,0 +1,8 @@
+version: 2
+
+sources:
+  - name: raw
+    tables:
+      - name: gym_details
+      - name: inventory_data
+      
