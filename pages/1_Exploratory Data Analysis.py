@@ -96,7 +96,7 @@ with tab5:
         y = st.selectbox("Y axis", num_cols, index=1 if len(num_cols) > 1 else 0)
         st.scatter_chart(df[[x, y]])
 
-if group_by_col and agg_col:
-    st.subheader(f"Grouped Data: {group_by_col} → {agg_func}({agg_col})")
-    grouped_df = df.groupby(group_by_col)[agg_col].agg(agg_func).reset_index()
-    st.dataframe(grouped_df)
+# if group_by_col and agg_col:
+#     st.subheader(f"Grouped Data: {group_by_col} → {agg_func}({agg_col})")
+#     grouped_df = df.groupby(group_by_col)[agg_col].agg(agg_func).reset_index()
+#     st.dataframe(grouped_df)
