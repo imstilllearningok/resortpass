@@ -1,53 +1,32 @@
 import streamlit as st
 import pandas as pd
 import io
-from google.cloud import bigquery
-from google.oauth2 import service_account
+import os
 
 st.set_page_config(page_title="Exploratory Data Analysis")
 st.title("Exploratory Data Analysis")
 
-st.markdown("Behind the scenes, raw tables were added to BigQuery. Transformation and cleaning were done using DBT. We merged the tables, added a calendar & holiday table, and created a final table for analysis. Below you can see insights into the raw table along with the final analysis table.")
+st.markdown(
+    "CSV files are being used for analysis. These CSVs represent raw and transformed tables. "
+    "Explore insights from the raw and final analysis tables below."
+)
 
-key_path = 'resortpass-44c86fc588c0.json'
-
-@st.cache_resource(show_spinner=False)
-def load_data():
-    credentials = service_account.Credentials.from_service_account_file(key_path)
-    client = bigquery.Client(credentials=credentials, project=credentials.project_id)
-    dataset_id = f"{credentials.project_id}.raw"
-
+@st.cache_data(show_spinner=False)
+def load_csv_data():
+    filenames = ['gym_details.csv', 'inventory_data.csv', 'joined.csv', 'agg_inventory_data.csv']
     dfs = {}
-    for table in client.list_tables(dataset_id):
-        table_id = f"{dataset_id}.{table.table_id}"
-        df = client.query(f"SELECT * FROM `{table_id}`").to_dataframe()
-        dfs[table.table_id] = df
+    for file in filenames:
+        name = file.replace('.csv', '')
+        path = os.path.join(file)
+        dfs[name] = pd.read_csv(path)
     return dfs
 
-if 'dataframes' not in st.session_state:
-    st.session_state.dataframes = load_data()
+dataframes = load_csv_data()
 
-dataset_options = ['gym_details','inventory_details','merged_data','final_analysis']
+dataset_options = list(dataframes.keys())
 selected_dataset = st.radio("Select Table:", dataset_options)
 
-df = st.session_state.dataframes[selected_dataset]
-
-# with st.sidebar:
-#     st.header("Filters")
-#     col_filters = {}
-#     for col in df.select_dtypes(include='object').columns:
-#         unique_vals = df[col].dropna().unique()
-#         if len(unique_vals) <= 50:
-#             selected_vals = st.multiselect(f"{col}", unique_vals, default=unique_vals)
-#             col_filters[col] = selected_vals
-
-#     for col, vals in col_filters.items():
-#         df = df[df[col].isin(vals)]
-
-#     st.header("Group By")
-#     group_by_col = st.selectbox("Group by", [""] + list(df.columns))
-#     agg_col = st.selectbox("Aggregate", [""] + list(df.select_dtypes(include='number').columns))
-#     agg_func = st.selectbox("Aggregation Function", ["mean", "sum", "count", "max", "min"])
+df = dataframes[selected_dataset]
 
 tab1, tab2, tab3, tab4, tab5 = st.tabs([
     "Data Preview", "Data Information", "Shape", "Descriptive Stats", "Charts"
@@ -78,25 +57,20 @@ with tab5:
 
     chart_type = st.selectbox("Chart Type", ["Histogram", "Bar Chart", "Line Chart", "Scatter Plot"])
 
-    if chart_type == "Histogram":
+    if chart_type == "Histogram" and num_cols:
         col = st.selectbox("Column", num_cols)
         st.bar_chart(df[col].value_counts())
 
-    elif chart_type == "Bar Chart":
+    elif chart_type == "Bar Chart" and cat_cols and num_cols:
         x_col = st.selectbox("X (categorical)", cat_cols)
         y_col = st.selectbox("Y (numerical)", num_cols)
         st.bar_chart(df.groupby(x_col)[y_col].mean().sort_values(ascending=False))
 
-    elif chart_type == "Line Chart":
+    elif chart_type == "Line Chart" and num_cols:
         x_col = st.selectbox("X axis", num_cols)
         st.line_chart(df[[x_col]])
 
-    elif chart_type == "Scatter Plot":
+    elif chart_type == "Scatter Plot" and len(num_cols) > 1:
         x = st.selectbox("X axis", num_cols)
-        y = st.selectbox("Y axis", num_cols, index=1 if len(num_cols) > 1 else 0)
+        y = st.selectbox("Y axis", [col for col in num_cols if col != x])
         st.scatter_chart(df[[x, y]])
-
-# if group_by_col and agg_col:
-#     st.subheader(f"Grouped Data: {group_by_col} → {agg_func}({agg_col})")
-#     grouped_df = df.groupby(group_by_col)[agg_col].agg(agg_func).reset_index()
-#     st.dataframe(grouped_df)

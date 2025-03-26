@@ -92,7 +92,7 @@ def start_of_assessment():
                     selected_sheets = ["BootcampPass_CSV"]
 
         elif data_source == "Upload Your Own Data":
-            st.session_state.bootcamp_data_uploaded = False  # Reset in case of switching sources
+            st.session_state.bootcamp_data_uploaded = False 
             file_type = st.selectbox("Select File Type:", [".csv", ".xlsx"])
             uploaded_file = st.file_uploader("Upload Your File:", type=["csv", "xlsx"])
 
@@ -114,7 +114,7 @@ def start_of_assessment():
                     selected_sheets = ["Uploaded_CSV"]
 
         def insert_data():
-            key_path = 'C:/Users/rrichardson/Downloads/Randolph Richardson/resortpass-44c86fc588c0.json'
+            key_path = 'resortpass-44c86fc588c0.json'
             credentials = service_account.Credentials.from_service_account_file(key_path)
             client = bigquery.Client(credentials=credentials, project=credentials.project_id)
 
@@ -135,7 +135,7 @@ def start_of_assessment():
                     load_job = client.load_table_from_file(csv_buffer, table_id, job_config=job_config)
                     load_job.result()
 
-                st.success(f"✅ Loaded `{sheet_name}` into BigQuery table `{table_id}`")
+                st.success(f"Loaded {sheet_name} into BigQuery table {table_id}")
 
         if selected_sheets:
             st.button("Add Selected Data to BigQuery", on_click=insert_data)
