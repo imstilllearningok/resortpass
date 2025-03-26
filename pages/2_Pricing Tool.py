@@ -69,12 +69,3 @@ def catboost():
     X['Electrical'] = X['Electrical'].fillna(X['Electrical'].mode()[0])
     X[cat_features] = X[cat_features].fillna('Missing')
  
-# Identify categorical columns
-cat_features = X.select_dtypes(include=['object']).columns.tolist()
-    features = 
-
-    X = data[features]
-    y = data[target]
-
-    # Splitting the data into training and testing sets
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
