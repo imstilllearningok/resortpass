@@ -9,7 +9,7 @@ st.title("Exploratory Data Analysis")
 
 st.markdown("Behind the scenes, raw tables were added to BigQuery. Transformation and cleaning were done using DBT. We merged the tables, added a calendar & holiday table, and created a final table for analysis. Below you can see insights into the raw table along with the final analysis table.")
 
-key_path = 'C:/Users/rrichardson/Downloads/Randolph Richardson/resortpass-44c86fc588c0.json'
+key_path = 'resortpass-44c86fc588c0.json'
 
 @st.cache_resource(show_spinner=False)
 def load_data():
