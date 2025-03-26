@@ -5,29 +5,37 @@ from google.cloud import bigquery
 from google.oauth2 import service_account
 import os
 
-# Set Page Title & Layout
 st.set_page_config(page_title="Homepage")
 st.title("Analytics Engineering Assessment")
-st.subheader("By Randolph Richardson")
+st.subheader("By: Randolph Richardson")
 
+st.markdown("Welcome! This is my Analytics Engineering Assessment for ResortPass.")
 
-
-
-
-st.markdown("Welcome! This is my submission for the Analytics Engineering Assessment for ResortPass.")
-# st.markdown("I separated the assessment into three parts: Data Ingestion, Exploratator Data Analysis, Pricing Tool, and a Summary Data Analysis.")
+st.markdown("")
 
 st.markdown("**The tools I used:**")
 lst = ['Streamlit - for the web application', 
        'Google Cloud Platform (BigQuery) - for the data warehouse',
        'DBT - for data transformation',
-       'Python (various packages) - for data manipulation, analysis, visualization, and modeling']
+       'Python (various packages) - for data manipulation, analysis, visualization, and modeling',
+       'GitHub - for version control']
 s = ''
 
 for i in lst:
     s += "- " + i + "\n"
 
 st.markdown(s)
+
+
+
+st.markdown("")
+st.markdown("")
+
+
+
+st.markdown("All data already exists in BigQuery & DBT, but here is an example of how this tool can be expanded with different data sources. Feel free to skip to the 'Exploratory Data Analysis' page.")
+
+
 
 
 def start_of_assessment():
@@ -37,14 +45,15 @@ def start_of_assessment():
 
     if "bootcamp_data_uploaded" not in st.session_state:
         st.session_state.bootcamp_data_uploaded = False
+  
 
-    if st.button("Begin!"):
+    if st.button("**Upload Data!**"):
         st.session_state.start_clicked = True
 
+    if st.button("Skip to Exploratory Data Analysis"):
+        st.switch_page("pages/1_Exploratory Data Analysis.py")
+
     if st.session_state.start_clicked:
-        st.write("All of the data is already in BigQuery, but here is a simple tool to add more if needed!")
-        st.write("You can explore additional upload options here (live connection to BQ, but not used in assessment.")
-        st.write("Feel free to skip to 'Exploratory Data Analysis' to see the data.")
 
         data_source = st.radio("Select Data Source:", ["BootcampPass", "Upload Your Own Data"])
 
@@ -58,7 +67,8 @@ def start_of_assessment():
             if st.session_state.bootcamp_data_uploaded:
                 
                 available_files = {
-                    "BootcampPass": "C:/Users/rrichardson/Documents/rp/app/data/Analytics Engineering  Case Study Data External Version.xlsx",
+                    "BootcampPass": "data\Analytics Engineering  Case Study Data External Version.xlsx",
+                    
                 }
 
                 list_of_sheets = list(available_files.keys())

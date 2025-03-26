@@ -4,14 +4,22 @@ from google.cloud import bigquery
 from google.oauth2 import service_account
 
 st.set_page_config(page_title="Pricing Tool")
-st.title("Pricing Analytics Tool")
-st.write("This is a tool for gyms joining BootcampPass to help them price their passes.")
-
-st.line_chart({"Standard": [10, 15, 20, 25, 30],
-               "Express": [20, 25, 30, 35, 40]})
+st.title("Pricing Tool")
+st.write("This is a tool for gyms joining BootcampPass to help them price their passes. Gyms")
 
 key_path = 'C:/Users/rrichardson/Downloads/Randolph Richardson/resortpass-44c86fc588c0.json'
 credentials = service_account.Credentials.from_service_account_file(key_path)
+
+
+if 'dataframes' in st.session_state:
+    dataset_options = list(st.session_state.dataframes.keys())
+    selected_dataset = st.radio("Select Table", dataset_options)
+    df = st.session_state.dataframes[selected_dataset]
+
+    st.dataframe(df.head())  # or whatever you want to do with it
+else:
+    st.warning("Data not loaded yet. Please go to the main page first.")
+
 
 with st.sidebar:
     st.title("Inputs")
@@ -26,33 +34,33 @@ with st.sidebar:
 
     sauna = st.selectbox("Sauna:", ["Yes", "No"])
 
-load_data = st.button("Run Model")
 
-if load_data:
-    client = bigquery.Client(credentials=credentials, project=credentials.project_id)
-    dataset_id = f"{credentials.project_id}.raw"
-    
-    dataframes = {}
-    for table in client.list_tables(dataset_id):
-        table_id = f"{dataset_id}.{table.table_id}"
-        df = client.query(f"SELECT * FROM `{table_id}`").to_dataframe()
-        dataframes[table.table_id] = df
-
-    st.success("Data loaded from BigQuery!")
-
-    if 'main_inventory_data' in dataframes:
-        st.subheader("Main Inventory Data Preview")
-        st.dataframe(dataframes['main_inventory_data'].head())
-    else:
-        st.warning("'main_inventory_data' not found in dataset.")
-
-if st.button("Run Model"):
+if st.button("**Run Model**"):
     st.write("Model is running with the following parameters:")
     st.write(f"Model: {selected_model}")
     st.write(f"Estimated Sales: {estimated_sales}")
     st.write(f"Target Margin: {target_margin}")
     st.write(f"Market: {market}")
     st.write(f"Sauna: {sauna}")
+
+
+client = bigquery.Client(credentials=credentials, project=credentials.project_id)
+dataset_id = f"{credentials.project_id}.raw"
+
+dataframes = {}
+for table in client.list_tables(dataset_id):
+    table_id = f"{dataset_id}.{table.table_id}"
+    df = client.query(f"SELECT * FROM `{table_id}`").to_dataframe()
+    dataframes[table.table_id] = df
+
+st.success("Data loaded from BigQuery!")
+
+if 'main_inventory_data' in dataframes:
+    st.subheader("Main Inventory Data Preview")
+    st.dataframe(dataframes['main_inventory_data'].head())
+else:
+    st.warning("'main_inventory_data' not found in dataset.")
+
 
 
 
