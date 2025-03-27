@@ -1,0 +1,365 @@
+gym_id,has_sauna,market,tier
+248,No,Los Angeles,Boutique
+383,No,Los Angeles,Boutique
+571,No,Los Angeles,Boutique
+702,No,Los Angeles,Boutique
+1475,No,Los Angeles,Boutique
+1644,No,Los Angeles,Boutique
+1757,No,Los Angeles,Boutique
+1964,No,Los Angeles,Boutique
+2058,No,Los Angeles,Boutique
+2074,No,Los Angeles,Boutique
+2158,No,Los Angeles,Boutique
+2164,No,Los Angeles,Boutique
+2383,No,Los Angeles,Boutique
+2444,No,Los Angeles,Boutique
+2460,No,Los Angeles,Boutique
+2561,No,Los Angeles,Boutique
+2645,No,Los Angeles,Boutique
+48,No,Miami,Boutique
+78,No,Miami,Boutique
+176,No,Miami,Boutique
+593,No,Miami,Boutique
+787,No,Miami,Boutique
+997,No,Miami,Boutique
+1465,No,Miami,Boutique
+1765,No,Miami,Boutique
+1855,No,Miami,Boutique
+271,No,New York City,Boutique
+556,No,New York City,Boutique
+1053,No,New York City,Boutique
+1515,No,New York City,Boutique
+2054,No,New York City,Boutique
+2336,No,New York City,Boutique
+2528,No,New York City,Boutique
+19,No,Los Angeles,High-Tier Chain
+20,No,Los Angeles,High-Tier Chain
+23,No,Los Angeles,High-Tier Chain
+59,No,Los Angeles,High-Tier Chain
+61,No,Los Angeles,High-Tier Chain
+79,Yes,Los Angeles,High-Tier Chain
+175,No,Los Angeles,High-Tier Chain
+199,No,Los Angeles,High-Tier Chain
+202,No,Los Angeles,High-Tier Chain
+238,No,Los Angeles,High-Tier Chain
+251,No,Los Angeles,High-Tier Chain
+266,No,Los Angeles,High-Tier Chain
+294,No,Los Angeles,High-Tier Chain
+295,No,Los Angeles,High-Tier Chain
+334,No,Los Angeles,High-Tier Chain
+362,No,Los Angeles,High-Tier Chain
+375,No,Los Angeles,High-Tier Chain
+386,No,Los Angeles,High-Tier Chain
+398,No,Los Angeles,High-Tier Chain
+399,No,Los Angeles,High-Tier Chain
+401,No,Los Angeles,High-Tier Chain
+402,No,Los Angeles,High-Tier Chain
+500,No,Los Angeles,High-Tier Chain
+507,No,Los Angeles,High-Tier Chain
+513,No,Los Angeles,High-Tier Chain
+565,No,Los Angeles,High-Tier Chain
+685,No,Los Angeles,High-Tier Chain
+703,No,Los Angeles,High-Tier Chain
+753,No,Los Angeles,High-Tier Chain
+754,No,Los Angeles,High-Tier Chain
+824,No,Los Angeles,High-Tier Chain
+825,No,Los Angeles,High-Tier Chain
+826,No,Los Angeles,High-Tier Chain
+827,No,Los Angeles,High-Tier Chain
+828,No,Los Angeles,High-Tier Chain
+856,No,Los Angeles,High-Tier Chain
+995,No,Los Angeles,High-Tier Chain
+1058,No,Los Angeles,High-Tier Chain
+1105,No,Los Angeles,High-Tier Chain
+1129,No,Los Angeles,High-Tier Chain
+1130,No,Los Angeles,High-Tier Chain
+1167,No,Los Angeles,High-Tier Chain
+1344,No,Los Angeles,High-Tier Chain
+1418,No,Los Angeles,High-Tier Chain
+1451,No,Los Angeles,High-Tier Chain
+1546,No,Los Angeles,High-Tier Chain
+1552,No,Los Angeles,High-Tier Chain
+1555,No,Los Angeles,High-Tier Chain
+1657,No,Los Angeles,High-Tier Chain
+1730,No,Los Angeles,High-Tier Chain
+1740,No,Los Angeles,High-Tier Chain
+1776,No,Los Angeles,High-Tier Chain
+1810,No,Los Angeles,High-Tier Chain
+1828,No,Los Angeles,High-Tier Chain
+1841,No,Los Angeles,High-Tier Chain
+1851,No,Los Angeles,High-Tier Chain
+1906,No,Los Angeles,High-Tier Chain
+1965,No,Los Angeles,High-Tier Chain
+1967,No,Los Angeles,High-Tier Chain
+2076,No,Los Angeles,High-Tier Chain
+2082,No,Los Angeles,High-Tier Chain
+2098,No,Los Angeles,High-Tier Chain
+2140,No,Los Angeles,High-Tier Chain
+2200,No,Los Angeles,High-Tier Chain
+2234,No,Los Angeles,High-Tier Chain
+2268,No,Los Angeles,High-Tier Chain
+2335,No,Los Angeles,High-Tier Chain
+2362,No,Los Angeles,High-Tier Chain
+2374,No,Los Angeles,High-Tier Chain
+2385,No,Los Angeles,High-Tier Chain
+2386,No,Los Angeles,High-Tier Chain
+2424,No,Los Angeles,High-Tier Chain
+2458,No,Los Angeles,High-Tier Chain
+2463,No,Los Angeles,High-Tier Chain
+2478,Yes,Los Angeles,High-Tier Chain
+2487,No,Los Angeles,High-Tier Chain
+2562,No,Los Angeles,High-Tier Chain
+2574,No,Los Angeles,High-Tier Chain
+2612,No,Los Angeles,High-Tier Chain
+2618,No,Los Angeles,High-Tier Chain
+2823,No,Los Angeles,High-Tier Chain
+2837,No,Los Angeles,High-Tier Chain
+44,No,Miami,High-Tier Chain
+45,No,Miami,High-Tier Chain
+63,No,Miami,High-Tier Chain
+65,No,Miami,High-Tier Chain
+66,No,Miami,High-Tier Chain
+92,No,Miami,High-Tier Chain
+128,No,Miami,High-Tier Chain
+135,No,Miami,High-Tier Chain
+164,No,Miami,High-Tier Chain
+178,No,Miami,High-Tier Chain
+181,No,Miami,High-Tier Chain
+185,No,Miami,High-Tier Chain
+247,Yes,Miami,High-Tier Chain
+286,No,Miami,High-Tier Chain
+344,No,Miami,High-Tier Chain
+397,No,Miami,High-Tier Chain
+414,No,Miami,High-Tier Chain
+420,No,Miami,High-Tier Chain
+462,No,Miami,High-Tier Chain
+466,No,Miami,High-Tier Chain
+504,No,Miami,High-Tier Chain
+551,No,Miami,High-Tier Chain
+555,No,Miami,High-Tier Chain
+577,No,Miami,High-Tier Chain
+683,No,Miami,High-Tier Chain
+749,No,Miami,High-Tier Chain
+775,No,Miami,High-Tier Chain
+835,No,Miami,High-Tier Chain
+921,No,Miami,High-Tier Chain
+953,No,Miami,High-Tier Chain
+955,No,Miami,High-Tier Chain
+1098,No,Miami,High-Tier Chain
+1168,No,Miami,High-Tier Chain
+1192,No,Miami,High-Tier Chain
+1243,No,Miami,High-Tier Chain
+1244,No,Miami,High-Tier Chain
+1247,No,Miami,High-Tier Chain
+1291,No,Miami,High-Tier Chain
+1351,No,Miami,High-Tier Chain
+1423,No,Miami,High-Tier Chain
+1431,No,Miami,High-Tier Chain
+1484,No,Miami,High-Tier Chain
+1485,No,Miami,High-Tier Chain
+1528,No,Miami,High-Tier Chain
+1561,No,Miami,High-Tier Chain
+1617,No,Miami,High-Tier Chain
+1632,No,Miami,High-Tier Chain
+1636,No,Miami,High-Tier Chain
+1695,No,Miami,High-Tier Chain
+1710,No,Miami,High-Tier Chain
+1711,No,Miami,High-Tier Chain
+1721,No,Miami,High-Tier Chain
+1790,No,Miami,High-Tier Chain
+1812,No,Miami,High-Tier Chain
+1815,No,Miami,High-Tier Chain
+1845,No,Miami,High-Tier Chain
+1871,No,Miami,High-Tier Chain
+1878,No,Miami,High-Tier Chain
+1907,No,Miami,High-Tier Chain
+1912,No,Miami,High-Tier Chain
+1913,No,Miami,High-Tier Chain
+1924,No,Miami,High-Tier Chain
+1975,No,Miami,High-Tier Chain
+2006,No,Miami,High-Tier Chain
+2011,No,Miami,High-Tier Chain
+2026,No,Miami,High-Tier Chain
+2080,No,Miami,High-Tier Chain
+2119,No,Miami,High-Tier Chain
+2128,No,Miami,High-Tier Chain
+2240,No,Miami,High-Tier Chain
+2327,No,Miami,High-Tier Chain
+2355,No,Miami,High-Tier Chain
+2400,No,Miami,High-Tier Chain
+2443,No,Miami,High-Tier Chain
+2448,No,Miami,High-Tier Chain
+2483,No,Miami,High-Tier Chain
+2514,No,Miami,High-Tier Chain
+2540,No,Miami,High-Tier Chain
+2601,No,Miami,High-Tier Chain
+2606,No,Miami,High-Tier Chain
+2626,No,Miami,High-Tier Chain
+2674,No,Miami,High-Tier Chain
+2704,No,Miami,High-Tier Chain
+2820,No,Miami,High-Tier Chain
+259,No,New York City,High-Tier Chain
+332,No,New York City,High-Tier Chain
+590,No,New York City,High-Tier Chain
+695,No,New York City,High-Tier Chain
+950,No,New York City,High-Tier Chain
+1031,No,New York City,High-Tier Chain
+1298,No,New York City,High-Tier Chain
+1346,No,New York City,High-Tier Chain
+1360,No,New York City,High-Tier Chain
+1377,No,New York City,High-Tier Chain
+1435,No,New York City,High-Tier Chain
+1438,No,New York City,High-Tier Chain
+1510,No,New York City,High-Tier Chain
+1518,No,New York City,High-Tier Chain
+1820,No,New York City,High-Tier Chain
+1843,No,New York City,High-Tier Chain
+1847,No,New York City,High-Tier Chain
+1888,No,New York City,High-Tier Chain
+1896,No,New York City,High-Tier Chain
+1903,No,New York City,High-Tier Chain
+1939,No,New York City,High-Tier Chain
+1972,No,New York City,High-Tier Chain
+1990,No,New York City,High-Tier Chain
+2002,No,New York City,High-Tier Chain
+2084,Yes,New York City,High-Tier Chain
+2180,No,New York City,High-Tier Chain
+2247,No,New York City,High-Tier Chain
+2326,No,New York City,High-Tier Chain
+2333,No,New York City,High-Tier Chain
+2345,No,New York City,High-Tier Chain
+2406,No,New York City,High-Tier Chain
+2420,No,New York City,High-Tier Chain
+2466,No,New York City,High-Tier Chain
+2485,No,New York City,High-Tier Chain
+2490,No,New York City,High-Tier Chain
+2495,No,New York City,High-Tier Chain
+2497,No,New York City,High-Tier Chain
+2523,No,New York City,High-Tier Chain
+2533,No,New York City,High-Tier Chain
+2539,No,New York City,High-Tier Chain
+2569,No,New York City,High-Tier Chain
+2586,No,New York City,High-Tier Chain
+2602,No,New York City,High-Tier Chain
+2617,No,New York City,High-Tier Chain
+2627,No,New York City,High-Tier Chain
+2667,No,New York City,High-Tier Chain
+2675,No,New York City,High-Tier Chain
+2681,No,New York City,High-Tier Chain
+2682,No,New York City,High-Tier Chain
+2700,No,New York City,High-Tier Chain
+2755,No,New York City,High-Tier Chain
+2761,No,New York City,High-Tier Chain
+2795,No,New York City,High-Tier Chain
+2801,No,New York City,High-Tier Chain
+24,No,Los Angeles,Mid-Tier Chain
+455,No,Los Angeles,Mid-Tier Chain
+584,No,Los Angeles,Mid-Tier Chain
+687,No,Los Angeles,Mid-Tier Chain
+745,No,Los Angeles,Mid-Tier Chain
+954,No,Los Angeles,Mid-Tier Chain
+1003,No,Los Angeles,Mid-Tier Chain
+1171,Yes,Los Angeles,Mid-Tier Chain
+1239,No,Los Angeles,Mid-Tier Chain
+1481,No,Los Angeles,Mid-Tier Chain
+1522,No,Los Angeles,Mid-Tier Chain
+1536,No,Los Angeles,Mid-Tier Chain
+1582,No,Los Angeles,Mid-Tier Chain
+1633,No,Los Angeles,Mid-Tier Chain
+1779,No,Los Angeles,Mid-Tier Chain
+1811,No,Los Angeles,Mid-Tier Chain
+1859,No,Los Angeles,Mid-Tier Chain
+1861,No,Los Angeles,Mid-Tier Chain
+1899,No,Los Angeles,Mid-Tier Chain
+2049,No,Los Angeles,Mid-Tier Chain
+2086,No,Los Angeles,Mid-Tier Chain
+2105,No,Los Angeles,Mid-Tier Chain
+2132,No,Los Angeles,Mid-Tier Chain
+2134,No,Los Angeles,Mid-Tier Chain
+2242,No,Los Angeles,Mid-Tier Chain
+2407,No,Los Angeles,Mid-Tier Chain
+2432,No,Los Angeles,Mid-Tier Chain
+2474,No,Los Angeles,Mid-Tier Chain
+2475,No,Los Angeles,Mid-Tier Chain
+2621,No,Los Angeles,Mid-Tier Chain
+2765,No,Los Angeles,Mid-Tier Chain
+2771,No,Los Angeles,Mid-Tier Chain
+346,No,Miami,Mid-Tier Chain
+365,No,Miami,Mid-Tier Chain
+505,No,Miami,Mid-Tier Chain
+705,No,Miami,Mid-Tier Chain
+1029,No,Miami,Mid-Tier Chain
+1059,No,Miami,Mid-Tier Chain
+1119,No,Miami,Mid-Tier Chain
+1131,No,Miami,Mid-Tier Chain
+1132,No,Miami,Mid-Tier Chain
+1233,No,Miami,Mid-Tier Chain
+1301,No,Miami,Mid-Tier Chain
+1454,No,Miami,Mid-Tier Chain
+1568,No,Miami,Mid-Tier Chain
+1647,No,Miami,Mid-Tier Chain
+1692,No,Miami,Mid-Tier Chain
+1703,No,Miami,Mid-Tier Chain
+1799,No,Miami,Mid-Tier Chain
+1818,No,Miami,Mid-Tier Chain
+1834,No,Miami,Mid-Tier Chain
+1864,No,Miami,Mid-Tier Chain
+1869,No,Miami,Mid-Tier Chain
+2001,No,Miami,Mid-Tier Chain
+2008,No,Miami,Mid-Tier Chain
+2094,No,Miami,Mid-Tier Chain
+2097,No,Miami,Mid-Tier Chain
+2125,No,Miami,Mid-Tier Chain
+2174,No,Miami,Mid-Tier Chain
+2219,No,Miami,Mid-Tier Chain
+2292,No,Miami,Mid-Tier Chain
+2314,No,Miami,Mid-Tier Chain
+2324,No,Miami,Mid-Tier Chain
+2391,No,Miami,Mid-Tier Chain
+2392,No,Miami,Mid-Tier Chain
+2419,No,Miami,Mid-Tier Chain
+2480,No,Miami,Mid-Tier Chain
+2502,No,Miami,Mid-Tier Chain
+2568,No,Miami,Mid-Tier Chain
+2649,No,Miami,Mid-Tier Chain
+2665,No,Miami,Mid-Tier Chain
+2670,No,Miami,Mid-Tier Chain
+2739,No,Miami,Mid-Tier Chain
+2785,No,Miami,Mid-Tier Chain
+2811,No,Miami,Mid-Tier Chain
+391,No,New York City,Mid-Tier Chain
+1359,No,New York City,Mid-Tier Chain
+1672,No,New York City,Mid-Tier Chain
+1835,No,New York City,Mid-Tier Chain
+1904,No,New York City,Mid-Tier Chain
+1931,No,New York City,Mid-Tier Chain
+1932,No,New York City,Mid-Tier Chain
+2015,No,New York City,Mid-Tier Chain
+2016,No,New York City,Mid-Tier Chain
+2030,No,New York City,Mid-Tier Chain
+2032,No,New York City,Mid-Tier Chain
+2110,Yes,New York City,Mid-Tier Chain
+2222,No,New York City,Mid-Tier Chain
+2246,No,New York City,Mid-Tier Chain
+2323,No,New York City,Mid-Tier Chain
+2337,No,New York City,Mid-Tier Chain
+2403,No,New York City,Mid-Tier Chain
+2411,No,New York City,Mid-Tier Chain
+2450,No,New York City,Mid-Tier Chain
+2453,No,New York City,Mid-Tier Chain
+2482,No,New York City,Mid-Tier Chain
+2531,No,New York City,Mid-Tier Chain
+2556,No,New York City,Mid-Tier Chain
+2557,No,New York City,Mid-Tier Chain
+2581,No,New York City,Mid-Tier Chain
+2596,No,New York City,Mid-Tier Chain
+2607,No,New York City,Mid-Tier Chain
+2615,No,New York City,Mid-Tier Chain
+2631,No,New York City,Mid-Tier Chain
+2655,No,New York City,Mid-Tier Chain
+2657,No,New York City,Mid-Tier Chain
+2710,No,New York City,Mid-Tier Chain
+2745,No,New York City,Mid-Tier Chain
+2783,No,New York City,Mid-Tier Chain
+2792,No,New York City,Mid-Tier Chain
+2816,No,New York City,Mid-Tier Chain

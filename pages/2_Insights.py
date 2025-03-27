@@ -1,7 +1,11 @@
 import streamlit as st
+import pandas as pd
+import os
+import matplotlib.pyplot as plt
 
+st.header("Insights")
 
-@st.cache_data(show_spinner=False)
+# @st.cache_data(show_spinner=False)
 def load_csv_data():
     filenames = {
         'agg_inventory_data (final table)': 'agg_inventory_data',
@@ -18,38 +22,119 @@ def load_csv_data():
 dataframes = load_csv_data()
 
 dataset_options = list(dataframes.keys())  
-selected_dataset = st.radio("Select Table:", dataset_options)
 
-selected_df = dataframes[selected_dataset]
-
-
-st.header("Insights")
-st.write("Based on the data exploration, the following insights were found:")
 data = dataframes['agg_inventory_data (final table)']
-peak_day = data.groupby('day_of_week_name')['sold_adult_units'].sum().idxmax()
-peak_month = data.groupby('month_name')['sold_adult_units'].sum().idxmax()
-top_market = data.groupby('market')['revenue'].sum().idxmax()
-st.dataframe(data.head(5))
+
+
+st.write("Based on the data exploration, the following insights were found:")
+
+st.markdown("")
+
+st.write("**1. As expected, Saturday & Sunday drive the highest amount of revenue:**")
+peak_day = data.groupby(['day_of_week_name','year_number'])['revenue'].sum().reset_index().sort_values('revenue', ascending=False)
+peak_day = data.groupby(['day_of_week_name','year_number']).agg({'revenue':'sum','booking_rate':'mean'}).reset_index().sort_values('revenue', ascending=False)
+pivot_table_peak_day = pd.pivot_table(
+        peak_day,
+        values='revenue',
+        index='day_of_week_name',
+        columns='year_number',
+        aggfunc='sum',
+        fill_value=0
+    )
+pivot_table_peak_day['total'] = pivot_table_peak_day.sum(axis=1)
+pivot_table_peak_day = pivot_table_peak_day.sort_values('total', ascending=False)
+st.write("Total revenue by day of the week:")
+st.dataframe(pivot_table_peak_day)
+
+
+weekly_day_sales = data.groupby(['week_start_date', 'day_of_week_name'])['revenue'].sum().reset_index()
+average_by_day = weekly_day_sales.groupby('day_of_week_name')['revenue'].mean().round(0).reset_index().sort_values('revenue', ascending=False).reset_index()
+st.write("Average revenue by day of the week:")
+st.dataframe(average_by_day)
+
+
+st.markdown("")
+
+
+st.write("**2. In 2024, only 6 gyms sold over 60% of their available passes:**")
+
+
+gym_sales = data[data['year_number'] == 2024].groupby(['gym_id','market','tier'])[['available_units','vacant_units','sold_units']].sum().reset_index()
+gym_sales['occupancy_rate'] = ((gym_sales['sold_units'] / gym_sales['available_units']) * 100).round(2)
+st.dataframe(gym_sales[gym_sales['occupancy_rate'] > 60].reset_index().sort_values('occupancy_rate', ascending=False).reset_index())
+
+bins = [0, 20, 40, 60, 80, 100]
+labels = ['0-20%', '21-40%', '41-60%', '61-80%', '81-100%']
+gym_sales['occupancy_bin'] = pd.cut(gym_sales['occupancy_rate'], bins=bins, labels=labels, include_lowest=True)
+bin_counts = gym_sales['occupancy_bin'].value_counts().sort_index()
+st.dataframe(bin_counts)
 
 
 
-group = data.groupby(['inventory_date','market'])['sold_adult_units'].sum().reset_index()
-st.dataframe(group)
 
-average_daily_sales = group['sold_adult_units'].mean()
-st.metric("Average Daily Sold Passes", average_daily_sales)
-st.dataframe(data.groupby(['gym_id','market'])['revenue'].sum().sort_values(ascending=False).reset_index().head(5))
-top_gym = data.groupby('gym_id')['revenue'].sum().idxmax()
-top_product = data.groupby('product_id')['revenue'].sum().idxmax()
-st.write(f"The peak day for sales is {peak_day}.")
-st.write(f"The peak month for sales is {peak_month}.")
-st.write(f"The top market by revenue is {top_market}.")
-st.write(f"The top gym by revenue is {top_gym}.")
-st.write(f"The top product by revenue is {top_product}.")
+low_occupancy = gym_sales[gym_sales['occupancy_rate'] <= 20]
+smaller_bins = [0, 5, 10, 15, 20]
+labels_smaller = ['0-5%', '6-10%', '11-15%', '16-20%']
+low_occupancy['occupancy_bin'] = pd.cut(low_occupancy['occupancy_rate'], bins=smaller_bins, labels=labels_smaller, include_lowest=True)
+low_bin_counts = low_occupancy['occupancy_bin'].value_counts().sort_index()
 
 
 
-st.write("New York City sees much higher peaks during the summer months:")
-st.line_chart(data.groupby(["inventory_date", group_by])[selected_metric].sum().unstack())
+plt.figure(figsize=(5, 3))
+low_bin_counts.plot(kind='bar')
+plt.title('Low Occupancy Rate Distribution (0–20%) – 2024',fontsize=7)
+plt.xlabel('Occupancy Rate Bins',fontsize=6)
+plt.ylabel('Number of Gyms',fontsize=6)
+plt.xticks(rotation=45, ha='right',fontsize=6)  
+plt.yticks(fontsize=6)  
+plt.tight_layout()
+st.pyplot(plt)
+st.markdown("")
 
-st.dataframe(data.groupby(['month_name','market'])['sold_adult_units'].sum().reset_index())
+
+st.write("**3. The Los Angeles market seems to have the healthiest pricing strategy - as average prices increases, demand is consistent:**")
+grouped = data[data['year_number'] == 2024].groupby(['week_start_date', 'market']).agg({
+    'price': 'mean',
+    'booking_rate': 'mean'
+}).reset_index()
+
+correlation_by_market = (
+    grouped
+    .groupby('market')
+    .apply(lambda df: df[['price', 'booking_rate']].corr().iloc[0, 1])
+    .reset_index()
+)
+
+correlation_by_market.columns = ['market', 'weekly_corr']
+
+correlation_df = correlation_by_market.set_index('market').T.reset_index(drop=True)
+
+st.write("Correlation between Average Price per Pass and Occupancy Rate by Market:")
+st.dataframe(correlation_df)
+
+markets = grouped['market'].unique()
+
+for market in markets:
+    market_data = grouped[grouped['market'] == market].sort_values('week_start_date')
+
+    fig, ax1 = plt.subplots(figsize=(6, 3))
+
+    ax1.plot(market_data['week_start_date'], market_data['price'], color='tab:blue', label='Average Price per Pass')
+    ax1.set_xlabel('Week',fontsize=6)
+    ax1.set_ylabel('Average Price per Pass', color='tab:blue',fontsize=6)
+    ax1.tick_params(axis='y', labelcolor='tab:blue', labelsize=6)
+
+    ax2 = ax1.twinx()
+    ax2.plot(market_data['week_start_date'], market_data['booking_rate'], color='tab:orange', label='Occupancy Rate')
+    ax2.set_ylabel('Occupancy Rate (%)', color='tab:orange',fontsize=6)
+    ax2.tick_params(axis='y', labelcolor='tab:orange',labelsize=6)
+
+    ax1.tick_params(axis='x', labelsize=6)
+    plt.setp(ax1.get_xticklabels(), rotation=90, ha='right')
+
+    plt.title(f"{market} — Average Pass Price vs. Occupancy Rate by Week",fontsize=7)
+    fig.tight_layout()
+    st.pyplot(fig)
+
+if st.button("Let me see the Pricing Model"):
+        st.switch_page("pages/3_Pricing Model.py")

@@ -8,99 +8,74 @@ from xgboost import XGBRegressor, plot_importance
 import matplotlib.pyplot as plt
 import os
 
+st.set_page_config(page_title="Pricing Model")
+st.title("Pricing Model")
 
-st.set_page_config(page_title="Pricing Tool")
-st.title("Pricing Tool")
-st.write("Please select the inputs and run the Pricing Recommendation!")
-
-@st.cache_data(show_spinner=False)
+# Load data
+@st.cache_data
 def load_csv_data():
     filenames = ['gym_details', 'inventory_data', 'joined', 'agg_inventory_data']
     dfs = {}
     for file in filenames:
-        name = file
         path = os.path.join('uploaded_data', file + '.csv')
-        dfs[name] = pd.read_csv(path)
+        dfs[file] = pd.read_csv(path)
     return dfs
 
 dataframes = load_csv_data()
-
-dataset_options = list(dataframes.keys())
-
 data = dataframes.get('agg_inventory_data')
+
+data['inventory_date'] = pd.to_datetime(data['inventory_date'], errors='coerce')
+data['day_of_week_name'] = data['day_of_week_name']
+data['month_name'] = data['month_name']
+data['has_sauna'] = data['has_sauna']
+data['available_units'] = data['available_units'].fillna(10)
+data['revenue'] = data['price'] * data['sold_units']
 
 with st.sidebar:
     st.title("Inputs")
+    market = st.selectbox("Market", sorted(data['market'].dropna().unique()))
+    product_type = st.selectbox("Product Type", sorted(data['product_type'].dropna().unique()))
+    tier = st.selectbox("Tier", sorted(data['tier'].dropna().unique()))
+    sauna = st.selectbox("Sauna", sorted(data['has_sauna'].dropna().unique()))
+    month_name = st.selectbox("Month", sorted(data['month_name'].dropna().unique()))
+    day_of_week_name = st.selectbox("Day of Week", sorted(data['day_of_week_name'].dropna().unique()))
+    available_units = st.slider("Available Units", 0, 50, 10)
 
-    market = st.selectbox("Market:", data['market'].unique())
-    product_type = st.selectbox("Product Type:", data['product_type'].unique())
-    tier = st.selectbox("Tier:", data['tier'].unique())
-    sauna = st.selectbox("Sauna:", data['has_sauna'].unique())
-    # vacant_units = st.slider("Vacant Units", 0, 50, 10)
-    # month = st.slider("Month", 1, 12, 6)
-    # day_of_week = st.slider("Day of Week (0=Mon, 6=Sun)", 0, 6, 2)
-    # is_weekend = 1 if day_of_week in [5, 6] else 0
-
-    if st.button("Get Price Recommendation"):
-        st.session_state.run_model = True
-
-if st.session_state.get('run_model', False):
-    st.subheader("Model Output")
-
-    # inventory_data = st.session_state.dataframes.get('inventory_data')
-    # gym_details = st.session_state.dataframes.get('gym_details')
-
-    # if inventory_data is None or gym_details is None:
-    #     st.error("Missing required datasets: 'inventory_data' or 'gym_details'")
-    #     st.stop()
-
-    # df = inventory_data.merge(gym_details, on='gym_id')
-    # df['inventory_date'] = pd.to_datetime(df['inventory_date'])
-    # df['month'] = df['inventory_date'].dt.month
-    # df['day_of_week'] = df['inventory_date'].dt.dayofweek
-    # df['is_weekend'] = df['day_of_week'].isin([5, 6]).astype(int)
-    # df['revenue'] = df['price'] * df['sold_units']
-    # df['has_sauna'] = df['has_sauna'].astype(str)
-
+if st.button("**Run Model**"):
     df = data.copy()
 
-    features = ['price', 'product_type', 'tier', 'market', 'has_sauna',
-                'month', 'day_of_week', 'is_weekend', 'vacant_units']
-    
+    features = [
+        'price', 'product_type', 'tier', 'market', 'has_sauna',
+        'month_name', 'day_of_week_name', 'available_units'
+    ]
     target = 'revenue'
 
-    X = df[features]
+    X = df[features].copy()
     y = df[target]
 
-    X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=0.2, random_state=42)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
     encoders = {}
-    for col in ['product_type', 'tier', 'market', 'has_sauna']:
+    for col in ['product_type', 'tier', 'market', 'has_sauna', 'month_name', 'day_of_week_name']:
         le = LabelEncoder()
-        X_train[col] = le.fit_transform(X_train[col])
-        X_test[col] = le.transform(X_test[col])
+        X_train[col] = le.fit_transform(X_train[col].astype(str))
+        X_test[col] = le.transform(X_test[col].astype(str))
         encoders[col] = le
 
     model = XGBRegressor(random_state=42)
     model.fit(X_train, y_train)
     preds = model.predict(X_test)
+    rmse = np.sqrt(mean_squared_error(y_test, preds))
 
-    st.write(f"📉 RMSE: **{np.sqrt(mean_squared_error(y_test, preds)):.2f}**")
-
-    fig, ax = plt.subplots(figsize=(10, 6))
-    plot_importance(model, ax=ax)
-    st.pyplot(fig)
 
     base_features = {
         'product_type': product_type,
         'tier': tier,
         'market': market,
-        'has_sauna': 'Yes' if sauna == 'Yes' else 'No',
-        'month': month,
-        # 'day_of_week': day_of_week,
-        # 'is_weekend': is_weekend,
-        # 'vacant_units': vacant_units
+        'has_sauna': sauna,
+        'month_name': month_name,
+        'day_of_week_name': day_of_week_name,
+        'available_units': available_units
     }
 
     price_range = list(range(10, 51))
@@ -108,29 +83,38 @@ if st.session_state.get('run_model', False):
     simulation_df = simulation_df[features]
 
     for col, le in encoders.items():
-        simulation_df[col] = le.transform(simulation_df[col])
+        simulation_df[col] = le.transform(simulation_df[col].astype(str))
 
     prediction = model.predict(simulation_df)
     optimal_idx = np.argmax(prediction)
     optimal_price = price_range[optimal_idx]
     expected_revenue = prediction[optimal_idx]
 
-    st.success(f"💰 Optimal Price: **${optimal_price}**")
-    st.info(f"📈 Expected Revenue at Optimal Price: **${expected_revenue:.2f}**")
+    st.success(f"Optimal Price: **${optimal_price}**")
+    st.info(f"Expected Revenue at Optimal Price: **${expected_revenue:.2f}**")
 
-    st.line_chart(pd.DataFrame({
+    chart_df = pd.DataFrame({
         'Price': price_range,
         'Expected Revenue': prediction
-    }).set_index('Price'))
+    }).set_index('Price')
 
 
+    fig1, ax1 = plt.subplots(figsize=(10, 6))
+    ax1.plot(chart_df.index, chart_df['Expected Revenue'], color='tab:blue', label='Expected Revenue')
+    ax1.set_xlabel('Price', fontsize=15)
+    ax1.set_ylabel('Expected Revenue', color='tab:blue', fontsize=15)
+    ax1.tick_params(axis='both', labelsize=15)
+    ax1.tick_params(axis='y', labelcolor='tab:blue',labelsize=15)
+
+    st.pyplot(fig1)
+
+    fig2, ax2 = plt.subplots(figsize=(10, 6))
+    plot_importance(model, ax=ax2)
+    ax2.set_xlabel('Importance Value', fontsize=15)
+    ax2.set_ylabel('Feature', color='tab:blue', fontsize=15)
+    ax2.tick_params(axis='both', labelsize=15)
+    ax2.set_title('Feature Importance', fontsize=15)
+    ax2.grid(False)
 
 
-
-
-
-
-
-
-
-
+    st.pyplot(fig2)

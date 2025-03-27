@@ -7,7 +7,6 @@ st.set_page_config(page_title="Exploratory Data Analysis")
 st.title("Exploration")
 
 
-@st.cache_data(show_spinner=False)
 def load_csv_data():
     filenames = {
         'agg_inventory_data (final table)': 'agg_inventory_data',
@@ -36,7 +35,7 @@ tab1, tab2, tab3, tab4, tab5  = st.tabs([
 
 
 numerical_cols = [
-    "price", "vacant_adult_units", "sold_adult_units", "available_units",
+    "price", "vacant_unts", "sold_units", "available_units",
     "booking_rate", "vacancy_rate", "revenue",
     "rolling_avg_booking_rate_last_4_weeks", "rolling_avg_vacancy_rate_last_4_weeks",
     "market_median_price", "market_avg_price", "market_avg_booking_rate",
@@ -152,7 +151,7 @@ with tab5:
             if group_by:
                 data = df.groupby(["inventory_date", group_by])[selected_metric].sum().unstack()
             else:
-                data = df.groupby("inventory_date")["sold_adult_units"].sum()
+                data = df.groupby("inventory_date")["sold_units"].sum()
 
             st.line_chart(data)
 
@@ -163,3 +162,6 @@ with tab5:
         #     st.scatter_chart(df[[x, y]])
     else:
         st.write("Please select 'agg_inventory_data' table to visualize data.") 
+
+if st.button("Take me to the Insights"):
+        st.switch_page("pages/2_Insights.py")
