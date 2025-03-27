@@ -3,8 +3,8 @@ import pandas as pd
 import io
 import os
 
-st.set_page_config(page_title="Exploratory Data Analysis")
-st.title("Exploration")
+st.set_page_config(page_title="Exploration")
+st.header("Exploration")
 
 
 def load_csv_data():
@@ -35,7 +35,7 @@ tab1, tab2, tab3, tab4, tab5  = st.tabs([
 
 
 numerical_cols = [
-    "price", "vacant_unts", "sold_units", "available_units",
+    "price", "vacant_units", "sold_units", "available_units",
     "booking_rate", "vacancy_rate", "revenue",
     "rolling_avg_booking_rate_last_4_weeks", "rolling_avg_vacancy_rate_last_4_weeks",
     "market_median_price", "market_avg_price", "market_avg_booking_rate",
@@ -43,6 +43,8 @@ numerical_cols = [
 ]
 
 categorical_col_map = {
+"Inventory Date": "inventory_date",
+"Week Start Date": "week_start_date",
 "Product ID": "product_id",
 "Gym ID": "gym_id",
 "Sauna": "has_sauna",
@@ -50,7 +52,6 @@ categorical_col_map = {
 "Tier": "tier",
 "Product Type": "product_type",
 "Day of Week": "day_of_week_name",
-"Inventory Date": "inventory_date",
 "Month": "month_name",
 "Weekend": "is_weekend",
 "Quarter": "quarter"
@@ -116,6 +117,7 @@ with tab4:
 with tab5:
     if selected_dataset == "agg_inventory_data (final table)":
         
+
         display_names = list(categorical_col_map.keys())
         display_names_line = list(col_map_line_chart.keys())
 
@@ -145,15 +147,32 @@ with tab5:
         elif chart_type == "Line Chart":
             selected_display = st.selectbox("Group By:", [None] + display_names_line)
             selected_metric = st.selectbox("Metric:", numerical_cols)
-            selected_aggregation = st.selectbox("Aggregation:", ["Sum", "Mean", "Count"])
+            agg_func = st.selectbox("Aggregation", ["Mean", "Sum", "Count"])
             group_by = col_map_line_chart.get(selected_display) if selected_display else None
 
             if group_by:
-                data = df.groupby(["inventory_date", group_by])[selected_metric].sum().unstack()
-            else:
-                data = df.groupby("inventory_date")["sold_units"].sum()
+                if agg_func == "Sum":
+                    data = df.groupby(["week_start_date", group_by])[selected_metric].sum().unstack()
+                    st.line_chart(data)
 
-            st.line_chart(data)
+                elif agg_func == "Mean":
+                    data = df.groupby(["week_start_date", group_by])[selected_metric].mean().unstack()
+                    st.line_chart(data)
+                else:
+                    data = df.groupby(["week_start_date", group_by])[selected_metric].count().unstack()
+                    st.line_chart(data)
+
+            else:
+                if agg_func == "Sum":
+                    data = df.groupby(["week_start_date"])[selected_metric].sum().reset_index()
+                    st.line_chart(data, x="week_start_date", y=selected_metric)
+                elif agg_func == "Mean":
+                    data = df.groupby(["week_start_date"])[selected_metric].mean().reset_index()
+                    st.line_chart(data, x="week_start_date", y=selected_metric)
+                else:
+                    data = df.groupby(["week_start_date"])[selected_metric].count().reset_index()
+                    st.line_chart(data, x="week_start_date", y=selected_metric)
+
 
         # elif chart_type == "Scatter Plot":
         #     x = st.selectbox("X axis", numerical_cols)
@@ -163,5 +182,5 @@ with tab5:
     else:
         st.write("Please select 'agg_inventory_data' table to visualize data.") 
 
-if st.button("Take me to the Insights"):
+if st.button("Take me to the Insights!"):
         st.switch_page("pages/2_Insights.py")

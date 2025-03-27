@@ -6,19 +6,31 @@ from google.oauth2 import service_account
 import os
 
 st.set_page_config(page_title="Homepage")
-st.title("Analytics Engineering Assessment")
-st.subheader("By: Randolph Richardson")
+st.markdown("""
+    <style>
+        div.block-container {
+            padding-top: 3rem;
+        }
+        h1 {
+            margin-bottom: 0.25rem;
+        }
+    </style>
+""", unsafe_allow_html=True)
+st.header("Analytics Engineering Assessment")
 
-st.markdown("Welcome! This is my Analytics Engineering Assessment for ResortPass.")
+
+st.markdown("**By: Randolph Richardson**")
+
 
 st.markdown("")
 
-st.markdown("**The tools I used:**")
-lst = ['Streamlit - for the web application', 
-       'Google Cloud Platform (BigQuery) - for the data warehouse',
-       'dbt - for data transformation',
-       'Python (various packages) - for data analysis, visualization, and the pricing model',
-       'GitHub - for version control']
+
+st.markdown("**Tools:**")
+lst = ['Streamlit - web application', 
+       'Google Cloud Platform (BigQuery) - data warehouse',
+       'dbt - data cleaning and transformations',
+       'Python (various packages) - data analysis, visualization, and pricing model development',
+       'GitHub - version control']
 s = ''
 
 for i in lst:
@@ -33,7 +45,7 @@ st.markdown("")
 
 
 
-st.markdown("All data already exists in BigQuery & dbt, but below is an example of how this tool can be expanded with different data sources. Feel free to skip to the 'Exploratory Data Analysis' page.")
+st.markdown("All data already exists in BigQuery & dbt, but below is an example of how this tool can be expanded for different data sources. Feel free to skip to the 'Exploration' page.")
 
     
 # key_path = st.secrets["gcp_service_account"]["gcp_service_account"]

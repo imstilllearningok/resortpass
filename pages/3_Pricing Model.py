@@ -9,10 +9,12 @@ import matplotlib.pyplot as plt
 import os
 
 st.set_page_config(page_title="Pricing Model")
-st.title("Pricing Model")
+st.header("Pricing Model")
+
+st.write("Select Inputs on the left and then click the button below:")
 
 # Load data
-@st.cache_data
+# @st.cache_data
 def load_csv_data():
     filenames = ['gym_details', 'inventory_data', 'joined', 'agg_inventory_data']
     dfs = {}
