@@ -47,42 +47,42 @@ with tab3:
 with tab4:
     st.dataframe(df.describe())
 
-with tab5:
+if selected_dataset == 'agg_inventory_data':
+    with tab5:
+        # Define columns of interest
+        numerical_cols = [
+            "price", "vacant_adult_units", "sold_adult_units", "available_units",
+            "booking_rate", "vacancy_rate", "revenue",
+            "rolling_avg_booking_rate_last_4_weeks", "rolling_avg_vacancy_rate_last_4_weeks",
+            "market_median_price", "market_avg_price", "market_avg_booking_rate",
+            "price_vs_market_median", "booking_rate_vs_market"
+        ]
 
-    # Define columns of interest
-    numerical_cols = [
-        "price", "vacant_adult_units", "sold_adult_units", "available_units",
-        "booking_rate", "vacancy_rate", "revenue",
-        "rolling_avg_booking_rate_last_4_weeks", "rolling_avg_vacancy_rate_last_4_weeks",
-        "market_median_price", "market_avg_price", "market_avg_booking_rate",
-        "price_vs_market_median", "booking_rate_vs_market"
-    ]
+        categorical_col_map = {
+        "Product ID": "product_id",
+        "Gym ID": "gym_id",
+        "Sauna": "has_sauna",
+        "Market": "market",
+        "Tier": "tier",
+        "Product Type": "product_type",
+        "Day of Week": "day_of_week_name",
+        "Month": "month_name",
+        "Weekend": "is_weekend",
+        "Quarter": "quarter"
+        }
 
-    categorical_col_map = {
-    "Product ID": "product_id",
-    "Gym ID": "gym_id",
-    "Sauna": "has_sauna",
-    "Market": "market",
-    "Tier": "tier",
-    "Product Type": "product_type",
-    "Day of Week": "day_of_week_name",
-    "Month": "month_name",
-    "Weekend": "is_weekend",
-    "Quarter": "quarter"
-    }
+        col_map_line_chart = {
+        "Sauna": "has_sauna",
+        "Market": "market",
+        "Tier": "tier",
+        "Product Type": "product_type",
+        "Day of Week": "day_of_week_name",
+        "Month": "month_name",
+        "Weekend": "is_weekend",
+        "Quarter": "quarter"
+        }
 
-    col_map_line_chart = {
-    "Sauna": "has_sauna",
-    "Market": "market",
-    "Tier": "tier",
-    "Product Type": "product_type",
-    "Day of Week": "day_of_week_name",
-    "Month": "month_name",
-    "Weekend": "is_weekend",
-    "Quarter": "quarter"
-    }
 
-    if selected_dataset == 'agg_inventory_data':
 
         display_names = list(categorical_col_map.keys())
         display_names_line = list(col_map_line_chart.keys())
@@ -126,5 +126,5 @@ with tab5:
             y = st.selectbox("Y axis", [col for col in numerical_cols if col != x])
             st.write(f"Scatter Plot: {x} vs {y}")
             st.scatter_chart(df[[x, y]])
-    else:
-        None
+else:
+    st.write("Visualizations are only available for 'agg_inventory_data' table.")

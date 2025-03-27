@@ -98,9 +98,9 @@ if st.session_state.get('run_model', False):
         'market': market,
         'has_sauna': 'Yes' if sauna == 'Yes' else 'No',
         'month': month,
-        'day_of_week': day_of_week,
-        'is_weekend': is_weekend,
-        'vacant_units': vacant_units
+        # 'day_of_week': day_of_week,
+        # 'is_weekend': is_weekend,
+        # 'vacant_units': vacant_units
     }
 
     price_range = list(range(10, 51))

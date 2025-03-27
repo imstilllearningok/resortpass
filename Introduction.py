@@ -114,7 +114,7 @@ def start_of_assessment():
                     selected_sheets = ["Uploaded_CSV"]
 
         def insert_data():
-            key_path = 'resortpass-44c86fc588c0.json'
+            key_path = st.secrets["gcp_service_account"]
             credentials = service_account.Credentials.from_service_account_file(key_path)
             client = bigquery.Client(credentials=credentials, project=credentials.project_id)
 
