@@ -16,7 +16,7 @@ st.markdown("")
 st.markdown("**The tools I used:**")
 lst = ['Streamlit - for the web application', 
        'Google Cloud Platform (BigQuery) - for the data warehouse',
-       'DBT - for data transformation',
+       'dbt - for data transformation',
        'Python (various packages) - for data analysis, visualization, and modeling',
        'GitHub - for version control']
 s = ''
@@ -33,7 +33,7 @@ st.markdown("")
 
 
 
-st.markdown("All data already exists in BigQuery & DBT, but here is an example of how this tool can be expanded with different data sources. Feel free to skip to the 'Exploratory Data Analysis' page.")
+st.markdown("All data already exists in BigQuery & dbt, but below is an example of how this tool can be expanded with different data sources. Feel free to skip to the 'Exploratory Data Analysis' page.")
 
 
 
@@ -44,8 +44,7 @@ def start_of_assessment():
         st.session_state.start_clicked = False
 
     if "bootcamp_data_uploaded" not in st.session_state:
-        st.session_state.bootcamp_data_uploaded = False
-  
+        st.session_state.bootcamp_data_uploaded = False 
 
     if st.button("**Upload Data!**"):
         st.session_state.start_clicked = True
@@ -55,7 +54,7 @@ def start_of_assessment():
 
     if st.session_state.start_clicked:
 
-        data_source = st.radio("Select Data Source:", ["BootcampPass", "Upload Your Own Data"])
+        data_source = st.selectbox("Select Data Source:", ["BootcampPass", "Upload Your Own Data"])
 
         csv_data = {}
         selected_sheets = []
@@ -67,29 +66,21 @@ def start_of_assessment():
             if st.session_state.bootcamp_data_uploaded:
                 
                 available_files = {
-                    "BootcampPass": "Analytics Engineering  Case Study Data External Version.xlsx",
+                    "BootcampPass": "uploaded_data/Analytics Engineering  Case Study Data External Version.xlsx",
                     
                 }
 
                 list_of_sheets = list(available_files.keys())
                 selected_path = available_files[list_of_sheets[0]]
-                file_type = "XLSX" if selected_path.endswith(".xlsx") else "CSV"
 
-                if file_type == "XLSX":
-                    excel_data = pd.ExcelFile(selected_path)
-                    for sheet_name in excel_data.sheet_names:
-                        sheet_data = pd.read_excel(excel_data, sheet_name=sheet_name)
-                        csv_data[sheet_name] = sheet_data
-                        with st.expander(f"Preview Data: {sheet_name}"):
-                            st.dataframe(sheet_data)
+                excel_data = pd.ExcelFile(selected_path)
+                for sheet_name in excel_data.sheet_names:
+                    sheet_data = pd.read_excel(excel_data, sheet_name=sheet_name)
+                    csv_data[sheet_name] = sheet_data
+                    with st.expander(f"Preview Data: {sheet_name}"):
+                        st.dataframe(sheet_data)
 
-                    selected_sheets = st.multiselect("Select Sheets to Upload to BigQuery:", excel_data.sheet_names)
-
-                elif file_type == "CSV":
-                    df = pd.read_csv(selected_path)
-                    csv_data["BootcampPass_CSV"] = df
-                    st.dataframe(df)
-                    selected_sheets = ["BootcampPass_CSV"]
+                selected_sheets = st.multiselect("Select Sheets to Upload to BigQuery:", excel_data.sheet_names)
 
         elif data_source == "Upload Your Own Data":
             st.session_state.bootcamp_data_uploaded = False 
@@ -114,7 +105,7 @@ def start_of_assessment():
                     selected_sheets = ["Uploaded_CSV"]
 
         def insert_data():
-            key_path = st.secrets["gcp_service_account"]
+            key_path = st.secrets["gcp_service_account"]['gcp_service_account']
             credentials = service_account.Credentials.from_service_account_file(key_path)
             client = bigquery.Client(credentials=credentials, project=credentials.project_id)
 

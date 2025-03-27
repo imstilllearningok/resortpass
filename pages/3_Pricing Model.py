@@ -15,11 +15,11 @@ st.write("Please select the inputs and run the Pricing Recommendation!")
 
 @st.cache_data(show_spinner=False)
 def load_csv_data():
-    filenames = ['gym_details.csv', 'inventory_data.csv', 'joined.csv', 'agg_inventory_data.csv']
+    filenames = ['gym_details', 'inventory_data', 'joined', 'agg_inventory_data']
     dfs = {}
     for file in filenames:
-        name = file.replace('.csv', '')
-        path = os.path.join(file)
+        name = file
+        path = os.path.join('uploaded_data', file + '.csv')
         dfs[name] = pd.read_csv(path)
     return dfs
 
@@ -30,7 +30,7 @@ dataset_options = list(dataframes.keys())
 data = dataframes.get('agg_inventory_data')
 
 with st.sidebar:
-    st.title("Inputs for Pricing Recommendations")
+    st.title("Inputs")
 
     market = st.selectbox("Market:", data['market'].unique())
     product_type = st.selectbox("Product Type:", data['product_type'].unique())
@@ -122,3 +122,16 @@ if st.session_state.get('run_model', False):
         'Price': price_range,
         'Expected Revenue': prediction
     }).set_index('Price'))
+
+
+
+
+
+
+
+
+
+
+
+
+st.write("ssadsa")
